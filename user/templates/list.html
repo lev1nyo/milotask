@@ -1,10 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% load milo_tags %}
 
-</body>
-</html>
+{% block title %}Milo User List{% endblock %}
+
+{% block content %}
+<h1>List of users</h1>
+<div>
+<a href="{% url 'user_edit' user_id=0 %}">Create new user</a>
+{% if users %}
+    <table border="1">
+    <tr>
+        <td><strong>User name</strong></td>
+        <td><strong>User birthday</strong></td>
+        <td><strong>Is allowed</strong></td>
+        <td><strong>Random number</strong></td>
+        <td><strong>Is rubbish</strong></td>
+        <td></td>
+    </tr>
+    {% for user in users %}
+        <tr>
+            <td>{{ user.username }}</td>
+            <td>{{ user.birthday }}</td>
+            <td>{% allowed user.birthday 13 %}</td>
+            <td>{{ user.random_number }}</td>
+            <td>{% bizz_fuzz user.random_number %}</td>
+            <td>
+                <a href="{% url 'user_view' user_id=user.id %}">View</a>&nbsp;
+                <a href="{% url 'user_edit' user_id=user.id %}">Edit</a>&nbsp;
+                <a href="{% url 'user_delete' user_id=user.id %}">Delete</a>
+            </td>
+        </tr>
+    {% endfor %}
+    </table>
+{% else %}
+    <h2>User list is empty</h2>
+{% endif %}
+</div>
+{% endblock %}

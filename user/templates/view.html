@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Milo User Details{% endblock %}
+
+{% block content %}
+<h1>User {{ user.username }}</h1>
+<div>
+{% if user %}
+    <ul>
+    <li>User name: {{ user.username }}</li>
+    <li>User birthday: {{ user.birthday }}</li>
+    <li>User random number: {{ user.random_number }}</li>
+    </ul>
+{% else %}
+    <h2>User is not found</h2>
+{% endif %}
+</div>
+{% endblock %}
